@@ -70,12 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final response = await client.post(Uri.parse(host + route),
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": 'true',
-        "Access-Control-Allow-Headers": 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization',
-        "Access-Control-Allow-Methods": "POST",
-        "Cookie": "someone=abcdef"
+        'Content-Type': 'application/json; charset=UTF-8'
       },
       body: jsonEncode(<String, String>{'text': inputController.text}));
 
