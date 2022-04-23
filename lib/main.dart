@@ -38,12 +38,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Assumption> assumptions = [
-    Assumption(key: "rescuee", assumption: "no assumption found", confidence: 0),
-    Assumption(key: "location", assumption: "no assumption found", confidence: 0),
-    Assumption(key: "condition", assumption: "no assumption found", confidence: 0),
-    Assumption(key: "datetime", assumption: "no assumption found", confidence: 0),
-    Assumption(key: "weather", assumption: "no assumption found", confidence: 0),
-    Assumption(key: "visibility", assumption: "no assumption found", confidence: 0),
+    Assumption(key: "rescuee", assumption: "", confidence: 0),
+    Assumption(key: "location", assumption: "", confidence: 0),
+    Assumption(key: "condition", assumption: "", confidence: 0),
+    Assumption(key: "datetime", assumption: "", confidence: 0),
+    Assumption(key: "weather", assumption: "", confidence: 0),
+    Assumption(key: "visibility", assumption: "", confidence: 0),
   ];
 
   int progress = 0;
@@ -53,6 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
   };
 
   TextEditingController inputController = TextEditingController();
+
+  var client = http.Client();
 
   Future submitResponse() async {
     //TODO: make sure that this url is updated when working on different computer
@@ -66,15 +68,17 @@ class _MyHomePageState extends State<MyHomePage> {
       route = 'update';
     }
 
-    final response = await http.post(Uri.parse(host + route),
+    final response = await client.post(Uri.parse(host + route),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": 'true',
-        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
-        "Access-Control-Allow-Methods": "POST"
+        "Access-Control-Allow-Headers": 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization',
+        "Access-Control-Allow-Methods": "POST",
+        "Cookie": "someone=abcdef"
       },
       body: jsonEncode(<String, String>{'text': inputController.text}));
+
     inputController.clear();
 
     if (response.statusCode == 200) {
@@ -134,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.grey.shade200,
       body: Container(
         margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.6,
+          top: MediaQuery.of(context).size.height * 0.5,
           left: MediaQuery.of(context).size.width * 0.4
         ),
         padding: EdgeInsets.only(top: 10.0),
