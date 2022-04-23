@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future submitResponse() async {
     //TODO: make sure that this url is updated when working on different computer
-    String host = 'https://emkabserver.herokuapp.com/';
+    String host = 'http://10.29.103.139:5000/';
     String route = '';
     if (progress == 0) {
       route = 'init';
